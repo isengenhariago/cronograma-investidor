@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cronograma de Aportes · Obra MCMV · IS Engenharia · Rev09</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001C37;--azul:#0071B9;--cinza:#909296;
+  --bg:#f3f5f8;--card:#ffffff;--borda:#d9dee5;--text:#0f1b2a;--muted:#5f6b78;
+  --azul-lt:#e6f1f9;--ok:#1e7a46;--ok-lt:#e7f4ec;--warn:#9a6a00;--warn-lt:#fff5d9;--bad:#a12a2a;--bad-lt:#fbe9e9;
+  --font:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;--cond:'Barlow Condensed','Arial Narrow',sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a1320;--card:#111e2e;--borda:#24364b;--text:#e6edf5;--muted:#9aa8b6;--azul-lt:#0f2a42;
+  --ok-lt:#10301f;--warn-lt:#33290d;--bad-lt:#3a1616;--ok:#5cc58a;--warn:#e6b84a;--bad:#ff8a8a;color-scheme:dark}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.45;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+input,select,button{font-family:var(--font);font-size:14px}
+.page{max-width:1120px;margin:0 auto;padding:1.25rem}
+.header{background:var(--navy);color:#fff;border-radius:10px;padding:1.4rem 1.6rem;margin-bottom:1rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-end}
+.header h1{font-family:var(--cond);font-size:26px;font-weight:700;line-height:1.1}
+.header p{font-size:13px;color:rgba(255,255,255,.7);margin-top:4px}
+.header .marca{font-family:var(--cond);font-size:15px;font-weight:600;text-align:right}
+.header .marca small{display:block;font-family:var(--font);font-weight:400;font-size:11px;color:rgba(255,255,255,.6)}
+.tabs{display:flex;gap:4px;margin-bottom:1rem;overflow-x:auto}
+.tab{flex:1;min-width:150px;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;background:var(--card);color:var(--muted);cursor:pointer;font-weight:500;text-align:left}
+.tab b{display:block;font-family:var(--cond);font-size:16px;color:var(--text)}
+.tab.active{border-color:var(--azul);box-shadow:inset 0 -3px 0 var(--azul)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+.panel{display:none}.panel.active{display:block}
+.box{background:var(--card);border:1px solid var(--borda);border-radius:8px;padding:1rem 1.1rem;margin-bottom:1rem}
+.box h2{font-family:var(--cond);font-size:18px;font-weight:600;margin-bottom:.6rem;color:var(--text)}
+.box h2 span{font-family:var(--font);font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.field{display:flex;flex-direction:column;gap:3px}
+.field label{font-size:12px;font-weight:600;color:var(--muted)}
+.field input,.field select{border:1px solid var(--borda);border-radius:6px;padding:7px 9px;background:var(--card);color:var(--text);width:100%}
+.field input.in{background:#fffbe6;color:#0b3d91}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .field input.in{background:#2a2610;color:#9cc7ff}}
+.field .hint{font-size:11px;color:var(--muted)}
+.wide{grid-column:span 2}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:1rem}
+.kpi{background:var(--card);border:1px solid var(--borda);border-radius:8px;padding:12px}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-family:var(--cond);font-size:23px;font-weight:700;margin-top:2px}
+.kpi .s{font-size:11px;color:var(--muted);margin-top:2px}
+.kpi.main{background:var(--navy);border-color:var(--navy)}.kpi.main .l,.kpi.main .s{color:rgba(255,255,255,.7)}.kpi.main .v{color:#fff}
+.kpi.good .v{color:var(--ok)}
+.tbl{overflow-x:auto;border:1px solid var(--borda);border-radius:8px;margin-bottom:1rem;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--navy);color:#fff;font-family:var(--cond);font-weight:600;font-size:13px;padding:9px 10px;text-align:left;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--borda);vertical-align:top}
+tr.zero td{color:var(--muted)}
+tfoot td{font-weight:700;background:var(--azul-lt)}
+.r{text-align:right;white-space:nowrap}.c{text-align:center}
+.num{font-variant-numeric:tabular-nums}
+.chip{display:inline-block;font-family:var(--cond);font-weight:600;font-size:12px;padding:2px 7px;border-radius:4px;background:var(--azul-lt);color:var(--azul)}
+.status{border-radius:8px;padding:12px 14px;margin-bottom:1rem;font-weight:500;border:1px solid}
+.status.ok{background:var(--ok-lt);border-color:var(--ok);color:var(--ok)}
+.status.warn{background:var(--warn-lt);border-color:var(--warn);color:var(--warn)}
+.status.bad{background:var(--bad-lt);border-color:var(--bad);color:var(--bad)}
+.status small{display:block;font-weight:400;color:var(--text);margin-top:3px}
+.nota{font-size:12px;color:var(--muted);border-left:3px solid var(--azul);background:var(--card);padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:1rem;line-height:1.6}
+.nota b{color:var(--text)}
+.chart{width:100%;height:auto;display:block}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:760px){.two{grid-template-columns:1fr}.wide{grid-column:span 1}}
+.row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--borda);font-size:13px}
+.row:last-child{border-bottom:none}.row.b{font-weight:700}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--borda);background:var(--card);color:var(--text);border-radius:6px;padding:8px 14px;cursor:pointer;font-weight:500}
+.btn.p{background:var(--azul);border-color:var(--azul);color:#fff}
+.msg{white-space:pre-wrap;font-size:13px;background:var(--azul-lt);border-radius:8px;padding:12px;margin:.6rem 0;line-height:1.55}
+.bar{height:8px;background:var(--borda);border-radius:4px;overflow:hidden;min-width:80px}
+.bar>div{height:100%;background:var(--azul)}
+@media print{
+  :root{--bg:#fff;--card:#fff;--text:#000;--muted:#444;--borda:#ccc;--azul-lt:#eef4fa;color-scheme:light}
+  .tabs,.noprint,.btns{display:none!important}.panel{display:none!important}.panel.printme{display:block!important}
+  .page{padding:0}.box,.tbl,.kpi{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div>
+    <h1 id="h-titulo">Cronograma de aportes do investidor</h1>
+    <p id="h-sub">Obra MCMV · chamada de capital pela curva real de desembolso · Rev09</p>
+  </div>
+  <div class="marca">IS Engenharia e Construção<small>Base real: 7 obras MCMV (2025–2026)</small></div>
+</div>
+
+<div class="tabs noprint" role="tablist">
+  <button class="tab active" data-t="crono"><b>Cronograma</b>Aportes previstos</button>
+  <button class="tab" data-t="quinz"><b>Chamada da semana</b>Aporte pelo saldo real</button>
+  <button class="tab" data-t="roi"><b>Retorno</b>ROI e TIR</button>
+  <button class="tab" data-t="base"><b>Base real</b>Curva e calibração</button>
+</div>
+
+<!-- ═════════ CRONOGRAMA ═════════ -->
+<section class="panel active printme" id="p-crono">
+  <div class="box noprint">
+    <h2>Dados da obra</h2>
+    <div class="grid">
+      <div class="field wide"><label for="ob-nome">Obra / empreendimento</label><input id="ob-nome" placeholder="Ex.: NOME 8 - Q00 L00 - Bairro"></div>
+      <div class="field wide"><label for="ob-inv">Investidor</label><input id="ob-inv" placeholder="Nome do investidor"></div>
+      <div class="field"><label for="ob-ini">Início da obra (gabarito)</label><input class="in" type="date" id="ob-ini" value="2026-11-02"></div>
+      <div class="field"><label for="ob-casas">Nº de casas</label><input class="in" type="number" id="ob-casas" value="2" min="1" max="20"></div>
+      <div class="field"><label for="ob-area">Área por casa (m²)</label><input class="in" type="number" id="ob-area" value="65" min="30" max="300" step="0.01"></div>
+      <div class="field"><label for="ob-rm2">Custo da obra sem taxa adm (R$/m²)</label><input class="in" type="number" id="ob-rm2" value="1865" step="10"><span class="hint">Real 7 obras: R$ 1.768–2.041/m² (média R$ 1.865)</span></div>
+      <div class="field"><label for="ob-tot">Custo da obra sem taxa adm (opcional)</label><input class="in" type="number" id="ob-tot" placeholder="usa área × R$/m²" step="100"><span class="hint">Preencha se tiver o orçamento da obra</span></div>
+      <div class="field"><label for="ob-adm">Taxa de administração IS (R$/casa)</label><input class="in" type="number" id="ob-adm" value="17000" step="500"><span class="hint">Obras novas: R$ 17.000/casa · real: R$ 15.000–16.360</span></div>
+    </div>
+  </div>
+  <div class="box noprint">
+    <h2>Regra da chamada de capital</h2>
+    <div class="grid">
+      <div class="field"><label for="p-per">Periodicidade</label><select class="in" id="p-per"><option value="1">Semanal</option><option value="2">Quinzenal</option><option value="4">Mensal</option></select><span class="hint">Semanal: menor saldo parado no backtest</span></div>
+      <div class="field"><label for="p-B">Cobertura extra (semanas)</label><input class="in" type="number" id="p-B" value="1" min="0" max="4" step="1"><span class="hint">Aporte cobre o período + esta folga</span></div>
+      <div class="field"><label for="p-col">Colchão mínimo (% do custo)</label><input class="in" type="number" id="p-col" value="4" min="0" max="15" step="0.5"><span class="hint">Maior compra única da base: 3,8% do custo</span></div>
+      <div class="field"><label for="p-C">Prazo do cinza – empreiteiro (meses)</label><input class="in" type="number" id="p-C" value="3" min="1" max="24" step="0.25"><span class="hint" id="p-C-hint"></span></div>
+      <div class="field"><label for="p-A">Acabamento até casa pronta (meses)</label><input class="in" type="number" id="p-A" value="2" min="0.5" max="12" step="0.25"><span class="hint">Pronta aguardando elétrica, louças e acabamentos</span></div>
+      <div class="field"><label for="p-T">Elétrica, louças e documentação (meses)</label><input class="in" type="number" id="p-T" value="1" min="0.25" max="12" step="0.25"><span class="hint" id="p-T-hint"></span></div>
+      <div class="field"><label for="p-fech">Gastos de fechamento</label><select class="in" id="p-fech"><option value="sep">Aporte final na liberação da documentação</option><option value="inc">Incluídos nos aportes semanais</option></select><span class="hint">Elétrica final, louças, ISS, averbação, CND, RCPM</span></div>
+      <div class="field"><label for="p-arr">Arredondar aporte para cima (R$)</label><select class="in" id="p-arr"><option value="100">100</option><option value="500">500</option><option value="1000">1.000</option></select></div>
+    </div>
+  </div>
+
+  <div class="box noprint" id="box-fin">
+    <h2>Aporte final da documentação <span>só o que depende do pedido de documentação · valores médios das 7 obras, editáveis</span></h2>
+    <div class="tbl" style="margin-bottom:6px"><table><thead><tr><th>Item</th><th class="r">Valor unitário (R$)</th><th>Base</th><th class="r">Qtd</th><th class="r">Total</th><th>Referência real</th></tr></thead><tbody id="tb-fin"></tbody><tfoot id="tf-fin"></tfoot></table></div>
+    <div class="hint" style="font-size:12px;color:var(--muted)">Elétrica final, louças, limpeza, retoque, vistoria Caixa e seguro RCPM seguem nos aportes semanais: no backtest, deixar esses itens para o aporte final deixou ABADIA 2 com a conta negativa por 14 dias.</div>
+  </div>
+  <div class="kpis" id="k-crono"></div>
+  <div class="box">
+    <h2>Aportes × gasto previsto <span>R$ acumulado por semana de obra</span></h2>
+    <svg class="chart" id="ch-crono" viewBox="0 0 820 300" role="img" aria-label="Gráfico de aportes acumulados e gasto previsto"></svg>
+    <div class="legend"><span><i style="background:var(--navy)"></i>Gasto previsto (curva real)</span><span><i style="background:var(--azul)"></i>Aportes – chamada de capital</span><span><i style="background:var(--cinza);height:2px;border-top:2px dashed var(--cinza)"></i>Aportes – cronograma anterior</span></div>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Nº</th><th>Data</th><th>Semana</th><th style="min-width:250px">O que a obra estará pagando</th><th class="r">Aporte</th><th class="r">Aportado acum.</th><th class="r">Gasto previsto acum.</th><th class="r">Saldo após aporte</th></tr></thead>
+      <tbody id="tb-crono"></tbody><tfoot id="tf-crono"></tfoot>
+    </table>
+  </div>
+  <div class="nota" id="nota-crono"></div>
+  <div class="btns"><button class="btn p" onclick="printTab('crono')">Imprimir / salvar PDF</button></div>
+</section>
+
+<!-- ═════════ QUINZENA ═════════ -->
+<section class="panel" id="p-quinz">
+  <div class="nota"><b>Como usar a cada chamada:</b> puxe do Mais Controle o total já pago na obra e confira o saldo da conta pagadora. O aporte é o gasto previsto para o próximo período, mais a folga e o colchão, menos o saldo que já está na conta. Os dados da obra e a regra vêm da aba Cronograma.</div>
+  <div class="box">
+    <h2>Posição de hoje</h2>
+    <div class="grid">
+      <div class="field"><label for="q-data">Data da chamada</label><input class="in" type="date" id="q-data"></div>
+      <div class="field"><label for="q-gasto">Total já pago na obra (R$)</label><input class="in" type="number" id="q-gasto" value="" step="100" placeholder="Mais Controle"><span class="hint">Inclui taxa adm; sem lote e sem ITBI/escritura</span></div>
+      <div class="field"><label for="q-saldo">Saldo em conta hoje (R$)</label><input class="in" type="number" id="q-saldo" value="" step="100"></div>
+      <div class="field"><label for="q-aport">Total já aportado (R$)</label><input class="in" type="number" id="q-aport" value="" step="100"><span class="hint">Opcional: confere a conciliação</span></div>
+    </div>
+  </div>
+  <div id="q-status"></div>
+  <div class="kpis" id="k-quinz"></div>
+  <div class="box">
+    <h2>Mensagem para o investidor</h2>
+    <div class="msg" id="q-msg"></div>
+    <div class="btns"><button class="btn p" id="q-copy">Copiar mensagem</button><button class="btn" onclick="printTab('quinz')">Imprimir posição</button></div>
+  </div>
+</section>
+
+<!-- ═════════ RETORNO ═════════ -->
+<section class="panel printme-roi" id="p-roi">
+  <div class="box noprint">
+    <h2>Venda e lote</h2>
+    <div class="grid">
+      <div class="field"><label for="r-vgv">VGV por casa (R$)</label><input class="in" type="number" id="r-vgv" value="250000" step="5000"></div>
+      <div class="field"><label for="r-com">Comissão de venda (%)</label><input class="in" type="number" id="r-com" value="5" step="0.5"></div>
+      <div class="field"><label for="r-venda">Recebimento da venda (meses após início)</label><input class="in" type="number" id="r-venda" value="10" min="1" max="36"></div>
+      <div class="field"><label for="r-lote">Custo do lote (R$)</label><input class="in" type="number" id="r-lote" value="80000" step="5000"><span class="hint">Lote + ITBI + escritura</span></div>
+      <div class="field"><label for="r-lotem">Lote: meses antes do início</label><input class="in" type="number" id="r-lotem" value="4" min="0" max="60"><span class="hint">Real: 1 a 7 meses</span></div>
+      <div class="field"><label for="r-pre">Outros pré-obra (R$)</label><input class="in" type="number" id="r-pre" value="0" step="500"><span class="hint">Projeto, aprovação, alvará</span></div>
+      <div class="field"><label for="r-tma">TMA (% a.a.)</label><input class="in" type="number" id="r-tma" value="14" step="0.5"><span class="hint">Confirmar com a Selic/CDI vigente</span></div>
+    </div>
+  </div>
+  <div class="kpis" id="k-roi"></div>
+  <div class="two">
+    <div class="box"><h2>Demonstrativo</h2><div id="roi-dre"></div></div>
+    <div class="box"><h2>Fluxo do investidor por mês <span>chamada de capital</span></h2><div id="roi-fluxo"></div></div>
+  </div>
+  <div class="nota" id="nota-roi"></div>
+  <div class="btns"><button class="btn p" onclick="printTab('roi')">Imprimir / salvar PDF</button></div>
+</section>
+
+<!-- ═════════ BASE REAL ═════════ -->
+<section class="panel" id="p-base">
+  <div class="box">
+    <h2>Real × chamada de capital <span>aportes do investidor até 19/10/2026</span></h2>
+    <div id="real-box"></div>
+  </div>
+  <div class="box">
+    <h2>Curva de desembolso real <span>% do custo × % do prazo até 95%</span></h2>
+    <svg class="chart" id="ch-base" viewBox="0 0 820 300" role="img" aria-label="Curvas normalizadas das 7 obras"></svg>
+    <div class="legend" id="lg-base"></div>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Obra</th><th class="c">Casas</th><th class="r">Área</th><th class="r">Custo obra<br>sem taxa adm</th><th class="r">R$/m²</th><th class="r">50% pago</th><th class="r">90% pago</th><th class="r">95% pago</th><th class="r">Parado médio<br>anterior</th><th class="r">Parado médio<br>semanal</th><th class="r">Falta de caixa<br>anterior</th></tr></thead>
+      <tbody id="tb-base"></tbody><tfoot id="tf-base"></tfoot>
+    </table>
+  </div>
+  <div class="nota">
+    <b>Método:</b> pagamentos do Mais Controle de 7 obras: 5 de 2 casas (ABADIA 2, GOMES 4, IS 5, LANA 6, OSCAR 3) e 2 de 3 casas (IAGO 4, LANA 7). São 1.412 lançamentos, sem as exportações duplicadas. Ficam fora da curva o lote (terreno, escritura, ITBI, registro, comissão do lote), que vai para a aba Retorno, e a taxa de administração IS, que entra como parâmetro por casa. A taxa real foi de R$ 15.000 a R$ 16.360 por casa (GOMES 4, LANA 6, LANA 7, OSCAR 3).<br>
+    <b>Fechamento por casa</b>, medido nas 3 obras concluídas (IAGO 4, GOMES 4, LANA 6): eletricista R$ 600 nas três; material elétrico de acabamento de R$ 1.559 (IAGO 4) a R$ 3.900 (LANA 6), média R$ 2.827; louças e acabamentos R$ 1.626; limpeza final R$ 335; retoque R$ 300 (informado). Com esses valores, o custo a concluir é de R$ 9.799 na LANA 7 (elétrica, retoque, limpeza) e R$ 11.376 no OSCAR 3 (elétrica, louças, retoque, limpeza), distribuídos nas 4 a 6 semanas seguintes.<br>
+    <b>Curva:</b> compras feitas antes do gabarito (tijolo, terraplenagem, taxas) contam no dia 0. O tempo de cada obra é normalizado pelo prazo em que ela chegou a 95% do desembolso, e a curva usada é a média das 7. No tempo, ela é ancorada nos prazos da IS. O fim do cinza fica em 50% do prazo, quando já saiu ~61% do desembolso: a empreita do cinza é paga até 49% do prazo. A casa pronta, aguardando elétrica, louças e acabamentos, fica em 83% do prazo, com ~87% pago: pintura, pedras e esquadrias de vidro fecham entre 78% e 88%. Nas obras de 2 casas, 95% foi pago entre as semanas 23 e 29 (média 26). A regra 3 + 2 + 1 meses dá 26 semanas.<br>
+    <b>Backtest:</b> as 7 obras foram simuladas contra o gasto real dia a dia, com aporte semanal, folga de 1 semana, colchão de 4% e prazos pela regra IS. O pior caso foi R$ 316 a descoberto por 1 dia (OSCAR 3). No cronograma anterior (22 semanas, margem de 5%), ABADIA 2 ficou 16 dias negativa e LANA 6, 5 dias. Com quinzenal e mensal não houve falta, mas o saldo parado médio sobe para R$ 21,9 mil e R$ 28,1 mil, contra R$ 18,5 mil no semanal.<br>
+    <b>Limites:</b> IS 5 e ABADIA 2 ainda pagavam fiação em outubro e podem ter cauda maior. No IAGO 4, R$ 9.000 de pintura estão em Instalações Elétricas, e piso e pintura aparecem em Serviços Terceirizados em várias obras: isso afeta a tabela por etapa, não a curva. As 2 obras de 3 casas levaram 35 a 39 semanas até 95% pago, contra ~30 pela regra (4 + 2 + 1 meses). Nesse caso a chamada semanal reduz os aportes sozinha, porque usa o total pago.
+  </div>
+  <div class="box">
+    <h2>Composição real do custo da obra por etapa <span>média das 7 obras, sem taxa adm</span></h2>
+    <div class="tbl" style="margin-bottom:0">
+      <table><thead><tr><th>Etapa (Mais Controle)</th><th class="r">% do custo</th><th style="min-width:110px">Peso</th><th class="r">Faixa entre obras</th><th class="r">Metade paga na semana</th><th class="r">R$ nesta obra</th></tr></thead>
+      <tbody id="tb-et"></tbody></table>
+    </div>
+  </div>
+</section>
+
+</div>
+<script>
+const CURVES={"ABADIA 2": [0.0875, 0.1747, 0.1873, 0.1993, 0.2635, 0.2804, 0.3196, 0.416, 0.5004, 0.5513, 0.6006, 0.6311, 0.6733, 0.6916, 0.7297, 0.7713, 0.8764, 0.9051, 0.9121, 0.9299, 0.9528, 0.9603, 0.9653, 0.9655, 0.9655, 0.9665, 0.9669, 0.9669, 0.9672, 0.9822, 0.9823], "GOMES 4": [0.0679, 0.1194, 0.1584, 0.2047, 0.2141, 0.2547, 0.3452, 0.3648, 0.4052, 0.4411, 0.504, 0.5561, 0.5807, 0.6232, 0.689, 0.7427, 0.7747, 0.8463, 0.905, 0.9227, 0.9536, 0.964, 0.9647, 0.9655, 0.9785, 0.9801, 0.9933, 0.9973, 0.9976, 1.0, 1.0], "IS 5": [0.0503, 0.1192, 0.1639, 0.2223, 0.2718, 0.3071, 0.3639, 0.4753, 0.5447, 0.5953, 0.62, 0.6721, 0.6879, 0.7547, 0.7719, 0.7743, 0.8261, 0.8521, 0.8931, 0.8931, 0.9519, 0.9554, 0.9713, 0.9821, 0.9832, 0.9834, 0.9855, 0.986, 0.9867, 0.9876, 0.9881], "LANA 6": [0.019, 0.0624, 0.1827, 0.2391, 0.288, 0.3187, 0.3926, 0.4612, 0.5392, 0.5985, 0.6964, 0.697, 0.7546, 0.7939, 0.8301, 0.8313, 0.8853, 0.8856, 0.9048, 0.9395, 0.9509, 0.9509, 0.9509, 0.9571, 0.9574, 0.9574, 0.9638, 0.9653, 0.9657, 0.9671, 0.9671], "OSCAR 3": [0.0005, 0.0761, 0.127, 0.1822, 0.2454, 0.3869, 0.409, 0.4918, 0.6055, 0.6597, 0.6949, 0.701, 0.7226, 0.8304, 0.8734, 0.8876, 0.8946, 0.897, 0.9022, 0.9079, 0.9585, 0.9654, 0.9723, 0.9862, 0.9931, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "IAGO 4": [0.0354, 0.0657, 0.1215, 0.1692, 0.2085, 0.2751, 0.3753, 0.4084, 0.4992, 0.5386, 0.568, 0.6147, 0.6364, 0.6472, 0.6995, 0.7558, 0.8167, 0.8599, 0.923, 0.9383, 0.9661, 0.9726, 0.9789, 0.9836, 0.9873, 0.9881, 0.998, 0.9984, 1.0, 1.0, 1.0], "LANA 7": [0.0018, 0.0457, 0.069, 0.0908, 0.1887, 0.2801, 0.3299, 0.3913, 0.4756, 0.4992, 0.5621, 0.6381, 0.6753, 0.7415, 0.7863, 0.8498, 0.8559, 0.9098, 0.9105, 0.9266, 0.9516, 0.9658, 0.9694, 0.9847, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]};
+const BT=[{"obra": "ABADIA 2", "T": 235544, "idleA": 10497, "picoA": 31489, "faltaA": 2665, "dnegA": 16, "idleN": 12444, "picoN": 29324, "faltaN": 0, "dnegN": 0}, {"obra": "GOMES 4", "T": 276054, "idleA": 30914, "picoA": 71130, "faltaA": 0, "dnegA": 0, "idleN": 20054, "picoN": 42156, "faltaN": 0, "dnegN": 0}, {"obra": "IS 5", "T": 251601, "idleA": 20836, "picoA": 48755, "faltaA": 0, "dnegA": 0, "idleN": 16131, "picoN": 34929, "faltaN": 0, "dnegN": 0}, {"obra": "LANA 6", "T": 241770, "idleA": 12018, "picoA": 36017, "faltaA": 5650, "dnegA": 5, "idleN": 14987, "picoN": 37349, "faltaN": 0, "dnegN": 0}, {"obra": "OSCAR 3", "T": 274241, "idleA": 24676, "picoA": 53807, "faltaA": 0, "dnegA": 0, "idleN": 20417, "picoN": 44153, "faltaN": 316, "dnegN": 1}, {"obra": "IAGO 4", "T": 347996, "idleA": 56604, "picoA": 122775, "faltaA": 0, "dnegA": 0, "idleN": 21599, "picoN": 40480, "faltaN": 0, "dnegN": 0}, {"obra": "LANA 7", "T": 320179, "idleA": 67758, "picoA": 131337, "faltaA": 0, "dnegA": 0, "idleN": 24184, "picoN": 45021, "faltaN": 0, "dnegN": 0}];
+const META={"ABADIA 2": [2, 121.42, "2025-12-19", 22.7, 10, 20], "GOMES 4": [2, 153.22, "2025-12-23", 25.3, 13, 23], "IS 5": [2, 131.24, "2025-12-30", 27.3, 11, 27], "LANA 6": [2, 131.24, "2025-09-23", 25.4, 10, 22], "OSCAR 3": [2, 153.22, "2026-03-25", 29.3, 11, 26], "IAGO 4": [3, 196.86, "2025-08-22", 34.7, 15, 32], "LANA 7": [3, 156.87, "2025-12-23", 39.1, 18, 33]};
+const ET={"share": {"Mão de obra (empreita cinza)": 0.2106, "Documentação, Impostos e Taxas": 0.1111, "Serviços Terceirizados": 0.0924, "Alvenaria": 0.0775, "Superestrutura": 0.0714, "Piso e Revestimento": 0.0528, "Pintura": 0.0512, "Materiais diversos - geral": 0.0486, "Cobertura": 0.0422, "Instalações Elétricas": 0.0361, "Instalações Hidrossanitárias": 0.0331, "Infraestrutura (fundação/terrapl.)": 0.0326, "Reboco": 0.0265, "Pedras (bancadas/soleiras)": 0.0229, "Esquadrias de vidro": 0.0167, "Esquadrias de madeira": 0.016, "Louças e acabamentos": 0.0152, "Serralheria / portões": 0.0112, "Calçada": 0.0093, "Gesso": 0.0086, "Contrapiso": 0.0084, "Paisagismo": 0.0037, "Impermeabilização": 0.0021}, "tim": {"Mão de obra (empreita cinza)": [0.1, 0.31, 0.49], "Documentação, Impostos e Taxas": [0.14, 0.87, 1.06], "Serviços Terceirizados": [0.09, 0.57, 0.91], "Alvenaria": [0.0, 0.15, 0.31], "Superestrutura": [0.02, 0.18, 0.28], "Piso e Revestimento": [0.47, 0.66, 0.79], "Pintura": [0.6, 0.67, 0.78], "Materiais diversos - geral": [0.03, 0.18, 0.49], "Cobertura": [0.3, 0.4, 0.55], "Instalações Elétricas": [0.27, 0.97, 1.51], "Instalações Hidrossanitárias": [0.22, 0.38, 0.54], "Infraestrutura (fundação/terrapl.)": [0.0, 0.03, 0.19], "Reboco": [0.23, 0.35, 0.42], "Pedras (bancadas/soleiras)": [0.55, 0.7, 0.83], "Esquadrias de vidro": [0.57, 0.77, 0.88], "Esquadrias de madeira": [0.38, 0.64, 0.77], "Louças e acabamentos": [0.81, 0.99, 1.07], "Serralheria / portões": [0.31, 0.58, 0.71], "Calçada": [0.31, 0.47, 0.57], "Gesso": [0.45, 0.49, 0.7], "Contrapiso": [0.18, 0.35, 0.57], "Paisagismo": [0.72, 0.79, 0.89], "Impermeabilização": [0.0, 0.02, 0.11]}, "obra": {"ABADIA 2": {"Mão de obra (empreita cinza)": 0.2017, "Documentação, Impostos e Taxas": 0.1201, "Serviços Terceirizados": 0.0647, "Alvenaria": 0.0755, "Superestrutura": 0.0675, "Piso e Revestimento": 0.062, "Pintura": 0.0684, "Materiais diversos - geral": 0.0716, "Cobertura": 0.0371, "Instalações Elétricas": 0.0217, "Instalações Hidrossanitárias": 0.0396, "Infraestrutura (fundação/terrapl.)": 0.0245, "Reboco": 0.0215, "Pedras (bancadas/soleiras)": 0.019, "Esquadrias de vidro": 0.0166, "Esquadrias de madeira": 0.0123, "Louças e acabamentos": 0.0215, "Serralheria / portões": 0.0127, "Calçada": 0.0117, "Gesso": 0.0123, "Contrapiso": 0.0149, "Paisagismo": 0.0, "Impermeabilização": 0.0032}, "GOMES 4": {"Mão de obra (empreita cinza)": 0.2222, "Documentação, Impostos e Taxas": 0.1163, "Serviços Terceirizados": 0.0945, "Alvenaria": 0.08, "Superestrutura": 0.103, "Piso e Revestimento": 0.0666, "Pintura": 0.035, "Materiais diversos - geral": 0.0174, "Cobertura": 0.047, "Instalações Elétricas": 0.0299, "Instalações Hidrossanitárias": 0.0286, "Infraestrutura (fundação/terrapl.)": 0.0163, "Reboco": 0.036, "Pedras (bancadas/soleiras)": 0.0254, "Esquadrias de vidro": 0.0125, "Esquadrias de madeira": 0.0187, "Louças e acabamentos": 0.0161, "Serralheria / portões": 0.0, "Calçada": 0.0106, "Gesso": 0.0091, "Contrapiso": 0.0079, "Paisagismo": 0.0053, "Impermeabilização": 0.0019}, "IAGO 4": {"Mão de obra (empreita cinza)": 0.2206, "Documentação, Impostos e Taxas": 0.0966, "Serviços Terceirizados": 0.0945, "Alvenaria": 0.0698, "Superestrutura": 0.0534, "Piso e Revestimento": 0.0643, "Pintura": 0.0507, "Materiais diversos - geral": 0.093, "Cobertura": 0.0291, "Instalações Elétricas": 0.0516, "Instalações Hidrossanitárias": 0.0271, "Infraestrutura (fundação/terrapl.)": 0.0442, "Reboco": 0.013, "Pedras (bancadas/soleiras)": 0.0263, "Esquadrias de vidro": 0.0226, "Esquadrias de madeira": 0.0189, "Louças e acabamentos": 0.0149, "Serralheria / portões": 0.0, "Calçada": 0.0026, "Gesso": 0.0, "Contrapiso": 0.0, "Paisagismo": 0.0048, "Impermeabilização": 0.0022}, "IS 5": {"Mão de obra (empreita cinza)": 0.2034, "Documentação, Impostos e Taxas": 0.1594, "Serviços Terceirizados": 0.0664, "Alvenaria": 0.0593, "Superestrutura": 0.0642, "Piso e Revestimento": 0.0647, "Pintura": 0.054, "Materiais diversos - geral": 0.0443, "Cobertura": 0.0474, "Instalações Elétricas": 0.0311, "Instalações Hidrossanitárias": 0.0325, "Infraestrutura (fundação/terrapl.)": 0.0205, "Reboco": 0.0383, "Pedras (bancadas/soleiras)": 0.0237, "Esquadrias de vidro": 0.0138, "Esquadrias de madeira": 0.0205, "Louças e acabamentos": 0.0128, "Serralheria / portões": 0.0119, "Calçada": 0.0124, "Gesso": 0.0099, "Contrapiso": 0.006, "Paisagismo": 0.0034, "Impermeabilização": 0.0}, "LANA 6": {"Mão de obra (empreita cinza)": 0.2112, "Documentação, Impostos e Taxas": 0.1078, "Serviços Terceirizados": 0.1433, "Alvenaria": 0.099, "Superestrutura": 0.0354, "Piso e Revestimento": 0.0496, "Pintura": 0.0387, "Materiais diversos - geral": 0.0729, "Cobertura": 0.0462, "Instalações Elétricas": 0.0446, "Instalações Hidrossanitárias": 0.0233, "Infraestrutura (fundação/terrapl.)": 0.0587, "Reboco": 0.0, "Pedras (bancadas/soleiras)": 0.0196, "Esquadrias de vidro": 0.0145, "Esquadrias de madeira": 0.0034, "Louças e acabamentos": 0.0105, "Serralheria / portões": 0.0, "Calçada": 0.0049, "Gesso": 0.0101, "Contrapiso": 0.0, "Paisagismo": 0.0033, "Impermeabilização": 0.0032}, "LANA 7": {"Mão de obra (empreita cinza)": 0.1913, "Documentação, Impostos e Taxas": 0.0943, "Serviços Terceirizados": 0.0788, "Alvenaria": 0.0481, "Superestrutura": 0.0741, "Piso e Revestimento": 0.0619, "Pintura": 0.0625, "Materiais diversos - geral": 0.0241, "Cobertura": 0.0375, "Instalações Elétricas": 0.04, "Instalações Hidrossanitárias": 0.0393, "Infraestrutura (fundação/terrapl.)": 0.0192, "Reboco": 0.0488, "Pedras (bancadas/soleiras)": 0.0251, "Esquadrias de vidro": 0.024, "Esquadrias de madeira": 0.018, "Louças e acabamentos": 0.0141, "Serralheria / portões": 0.0539, "Calçada": 0.017, "Gesso": 0.0127, "Contrapiso": 0.0089, "Paisagismo": 0.0056, "Impermeabilização": 0.001}, "OSCAR 3": {"Mão de obra (empreita cinza)": 0.2236, "Documentação, Impostos e Taxas": 0.0833, "Serviços Terceirizados": 0.1047, "Alvenaria": 0.1109, "Superestrutura": 0.1023, "Piso e Revestimento": 0.0005, "Pintura": 0.0492, "Materiais diversos - geral": 0.0167, "Cobertura": 0.0513, "Instalações Elétricas": 0.0337, "Instalações Hidrossanitárias": 0.0411, "Infraestrutura (fundação/terrapl.)": 0.0448, "Reboco": 0.0281, "Pedras (bancadas/soleiras)": 0.0209, "Esquadrias de vidro": 0.0128, "Esquadrias de madeira": 0.0201, "Louças e acabamentos": 0.0165, "Serralheria / portões": 0.0, "Calçada": 0.006, "Gesso": 0.0058, "Contrapiso": 0.0213, "Paisagismo": 0.0035, "Impermeabilização": 0.003}}};
+const REAL=[{"obra": "OSCAR 3", "Tfin": 302074, "aportado": 299274, "pago": 290419, "saldoHoje": 8855, "idleR": 29161, "picoR": 56173, "faltaR": 547, "dnegR": 3, "idleM": 25589, "picoM": 48153, "faltaM": 0, "dnegM": 0, "saldoM": 10381, "dias": 209, "ini": "2026-03-25", "serie": [[0, 0, 48700, 547], [7, 32500, 55400, 19619], [14, 42500, 66200, 33907], [21, 92500, 70900, 37730], [28, 92500, 77200, 44516], [35, 92500, 83900, 49214], [42, 92500, 105600, 71673], [49, 142500, 134700, 92779], [56, 142500, 148400, 104431], [63, 142500, 167200, 123025], [70, 190000, 181000, 143007], [77, 190000, 187500, 158564], [84, 191590, 207700, 176384], [91, 241590, 217000, 189047], [98, 241590, 229500, 197853], [105, 241590, 238000, 203907], [112, 241590, 239500, 205558], [119, 241590, 241900, 211309], [126, 241590, 253000, 226389], [133, 267950, 279400, 251214], [140, 299274, 285400, 260738], [147, 299274, 290200, 268411], [154, 299274, 292500, 271643], [161, 299274, 294600, 272783], [168, 299274, 294700, 273439], [175, 299274, 295500, 273559], [182, 299274, 298000, 274979], [189, 299274, 298000, 276015], [196, 299274, 300800, 276528], [203, 299274, 300800, 286077]]}, {"obra": "GOMES 4", "Tfin": 297322, "aportado": 299313, "pago": 297322, "saldoHoje": 1992, "idleR": 6215, "picoR": 32209, "faltaR": 21426, "dnegR": 83, "idleM": 17062, "picoM": 45785, "faltaM": 0, "dnegM": 0, "saldoM": 0, "dias": 318, "ini": "2025-12-06", "serie": [[0, 0, 1753, 1753], [7, 0, 4253, 4253], [14, 0, 21021, 21021], [21, 30000, 48000, 39811], [28, 30000, 74000, 43226], [35, 45486, 76400, 52363], [42, 76486, 89200, 65130], [49, 76486, 113900, 76737], [56, 76486, 116600, 80787], [63, 116486, 120800, 98600], [70, 116486, 140700, 112915], [77, 116486, 158700, 118343], [84, 116486, 164400, 127723], [91, 116486, 171600, 135276], [98, 167486, 174900, 147990], [105, 167486, 182800, 158107], [112, 167486, 192500, 177337], [119, 213774, 209800, 185510], [126, 213774, 212800, 193310], [133, 213774, 223600, 199157], [140, 213774, 235600, 206233], [147, 248313, 241200, 219983], [154, 248313, 249000, 228491], [161, 248313, 258000, 240772], [168, 248313, 270600, 248582], [175, 273313, 275800, 264792], [182, 273313, 286000, 265238], [189, 273313, 286200, 269791], [196, 282313, 291500, 278338], [203, 282313, 297322, 281079], [210, 282313, 297322, 282887], [217, 294313, 297322, 283007], [224, 294313, 297322, 288432], [231, 294313, 297322, 291501], [238, 294313, 297322, 291821], [245, 299313, 297322, 295464], [252, 299313, 297322, 296379], [259, 299313, 297322, 296646], [266, 299313, 297322, 297322], [273, 299313, 297322, 297322], [280, 299313, 297322, 297322], [287, 299313, 297322, 297322], [294, 299313, 297322, 297322], [301, 299313, 297322, 297322], [308, 299313, 297322, 297322], [315, 299313, 297322, 297322]]}];
+
+// ── Curva média e envoltória ─────────────────────────────────────────────
+const XS = Array.from({length:31},(_,i)=>i*0.05);
+const NOMES = Object.keys(CURVES);
+let F = XS.map((_,i)=>NOMES.reduce((a,o)=>a+CURVES[o][i],0)/NOMES.length);
+for(let i=1;i<F.length;i++) F[i]=Math.max(F[i],F[i-1]); F[F.length-1]=1;
+let FMAX = XS.map((_,i)=>Math.max(...NOMES.map(o=>CURVES[o][i])));
+for(let i=1;i<FMAX.length;i++) FMAX[i]=Math.max(FMAX[i],FMAX[i-1]);
+function interp(x,xa,ya){ if(x<=xa[0]) return ya[0]; if(x>=xa[xa.length-1]) return ya[ya.length-1];
+  const i=Math.min(xa.length-2,Math.floor((x-xa[0])/(xa[1]-xa[0]))); const t=(x-xa[i])/(xa[i+1]-xa[i]); return ya[i]+t*(ya[i+1]-ya[i]); }
+const Fh = x => x<0?0:interp(x,XS,F);
+const Fm = x => x<0?0:interp(x,XS,FMAX);
+function inv(y){ if(y<=F[0]) return 0; for(let i=1;i<F.length;i++){ if(F[i]>=y){ const d=F[i]-F[i-1]; return XS[i-1]+(d>0?(y-F[i-1])/d:0)*0.05; } } return XS[XS.length-1]; }
+
+// cronograma anterior (Cronograma_MCMV_Investidor.html, 22 semanas, margem 5%)
+const OLD_P=[16,9.5,9,8,8.5,9,8.5,9,8,6,8.5], OLD_D=[0,14,28,42,56,70,84,98,119,140,154];
+function oldPcts(m=0.05){ const p=OLD_P.slice(); let ex=0; for(let i=0;i<8;i++){const a=p[i]*m;p[i]+=a;ex+=a;} p[10]=Math.max(p[10]-ex,.5); const s=p.reduce((a,b)=>a+b,0); return p.map(x=>x/s); }
+
+const FASES=[[.1,'Mobilização, fundação, 1ª compra de tijolo e aço'],[.2,'Alvenaria e superestrutura (empreita do cinza)'],[.3,'Laje, alvenaria e início do reboco'],[.4,'Reboco, cobertura e hidrossanitárias'],[.5,'Cobertura, hidrossanitárias e fim do cinza'],[.6,'Contrapiso, calçadas e piso/revestimento'],[.7,'Piso/revestimento, pintura e esquadrias de vidro'],[.8,'Pintura, esquadrias de madeira e pedras'],[.9,'Documentação (ISS, averbação), serralheria e pedras'],[1.0,'Documentação e fiação elétrica'],[1.1,'Documentação, louças e acabamentos'],[9,'Fechamento: elétrica final, CND e seguro RCPM']];
+const fase = x => FASES.find(f=>x<f[0])[1];
+
+// ── Helpers ─────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const val = id => parseFloat($(id).value);
+const brl = (v,d=0) => (v<0?'−':'')+'R$ '+Math.abs(v||0).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct = (v,d=1) => (isFinite(v)?(v*100).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%':'—');
+const k = v => 'R$ '+Math.round(v/1000).toLocaleString('pt-BR')+' mil';
+const dt = s => new Date(s+'T12:00:00');
+const addD = (s,n) => { const d=dt(s); d.setDate(d.getDate()+n); return d; };
+const fmtD = d => d.toLocaleDateString('pt-BR');
+const isoD = d => d.toISOString().slice(0,10);
+const ceilTo = (v,s) => Math.ceil(v/s-1e-9)*s;
+
+function sugC(n){ if(n<=2) return [3,'Regra IS: até 2 casas = 3 meses']; if(n===3) return [4,'Regra IS: 3 casas = 4 meses']; return [4.5+0.5*(n-4),'Regra IS: 4 casas = 4,5 meses, +0,5 por casa']; }
+const SEMMES=4.345, X1=0.5, X2=5/6;
+// tempo (semanas) -> posição na curva: cinza = 0–50%, acabamento = 50–83%, elétrica/louças/documentação = 83–100% (calibrado nas 7 obras)
+function tx(t,p){ const C=p.Cw,A=p.Aw,T=p.Tw; if(t<=0) return 0; if(t<=C) return X1*t/C; if(t<=C+A) return X1+(X2-X1)*(t-C)/A; return X2+(1-X2)*(t-C-A)/T; }
+function xt(x,p){ const C=p.Cw,A=p.Aw,T=p.Tw; if(x<=X1) return x/X1*C; if(x<=X2) return C+(x-X1)/(X2-X1)*A; return C+A+(x-X2)/(1-X2)*T; }
+const FIN_ITENS=[
+ {k:'iss',n:'ISS da obra (Prefeitura)',u:65,base:'m2',ref:'R$ 62–73/m² (6 obras)'},
+ {k:'aver',n:'Averbação da construção / instituição de condomínio',u:1910,base:'casa',ref:'R$ 1.470–2.220/casa'},
+ {k:'desp',n:'Despachante',u:1080,base:'casa',ref:'R$ 500–1.530/casa'},
+ {k:'cnd',n:'Regularização de obra e CND (contabilidade)',u:700,base:'casa',ref:'R$ 350–1.190/casa'},
+ {k:'hab',n:'Taxa final de habite-se',u:300,base:'casa',ref:'R$ 230–340/casa'}];
+function finTotal(p){ return FIN_ITENS.reduce((s,it)=>{ const el=$('fin-'+it.k); const u=el?num(el.value):it.u; return s+u*(it.base==='m2'?p.casas*p.area:p.casas); },0); }
+function num(v){ const x=parseFloat(v); return isFinite(x)?x:0; }
+function renderFin(p){
+  if(!$('fin-iss')){ $('tb-fin').innerHTML=FIN_ITENS.map(it=>`<tr><td>${it.n}</td><td class="r"><input class="in" type="number" id="fin-${it.k}" value="${it.u}" step="10" style="width:100px;text-align:right;border:1px solid var(--borda);border-radius:5px;padding:4px 6px;background:#fffbe6;color:#0b3d91"></td><td>${it.base==='m2'?'R$/m² construído':'R$/casa'}</td><td class="r num" id="finq-${it.k}"></td><td class="r num" id="fint-${it.k}"></td><td style="color:var(--muted);font-size:12px">${it.ref}</td></tr>`).join('');
+    FIN_ITENS.forEach(it=>$('fin-'+it.k).addEventListener('input',calc)); }
+  FIN_ITENS.forEach(it=>{ const q=it.base==='m2'?p.casas*p.area:p.casas; $('finq-'+it.k).textContent=q.toLocaleString('pt-BR',{maximumFractionDigits:2}); $('fint-'+it.k).textContent=brl(num($('fin-'+it.k).value)*q); });
+  $('tf-fin').innerHTML=`<tr><td colspan="4">Aporte final (${pct(finTotal(p)/p.T,1)} do desembolso)</td><td class="r">${brl(finTotal(p))}</td><td></td></tr>`;
+  $('box-fin').style.display=p.fech==='sep'?'':'none';
+}
+const PERN = p => ({1:'semana',2:'quinzena',4:'chamada mensal'})[p.per];
+
+function P(){
+  const casas=Math.max(1,parseInt($('ob-casas').value)||1), area=val('ob-area')||0, rm2=val('ob-rm2')||0;
+  const tot=val('ob-tot'); const obra = tot>0 ? tot : casas*area*rm2; const adm=casas*(val('ob-adm')||0); const T=obra+adm;
+  return {nome:$('ob-nome').value.trim(), inv:$('ob-inv').value.trim(), ini:$('ob-ini').value||'2026-11-02', casas, area, rm2, obra, adm, T,
+    per:parseInt($('p-per').value), B:Math.max(0,val('p-B')||0), col:(val('p-col')||0)/100, arr:parseInt($('p-arr').value),
+    Cw:Math.max(1,val('p-C')||3)*SEMMES, Aw:Math.max(.5,val('p-A')||2)*SEMMES, Tw:Math.max(.25,val('p-T')||1)*SEMMES, fech:$('p-fech').value};
+}
+
+// ── Simulação projetada ────────────────────────────────────────────────
+function simular(p){
+  const {T,per,B,col,arr}=p, step=per*7, fim=Math.ceil(xt(1.3,p)*7);
+  const gastoProj = d => T*Fh(tx(d/7,p));
+  const calls=[]; let cum=0;
+  const sep=p.fech==='sep', dPronta=Math.round((p.Cw+p.Aw)*7), FIN=sep?Math.min(finTotal(p),T*0.2):0, cap=T-FIN; let fez=false, nn=0;
+  for(let kk=0; ; kk++){
+    const d0=kk*step; if(d0>fim) break;
+    if(sep && !fez && d0>=dPronta){ const g=gastoProj(d0); cum+=FIN; fez=true;
+      calls.push({n:++nn,d0,x:tx((d0+step/2)/7,p),a:FIN,cum,gasto:g,saldo:cum-g,final:true}); }
+    const gasto = kk===0?0:gastoProj(d0);
+    let need;
+    if(kk===0) need=T*Fh(tx(per+B,p));
+    else { const x0=inv(Math.min(gasto/T,.999)); need=T*(Fh(tx(xt(x0,p)+per+B,p))-Fh(x0)); }
+    let a=Math.max(0,need+col*T-(cum-gasto));
+    a = Math.min(cap-(cum-(fez?FIN:0)), a>0?ceilTo(a,arr):0); if(a<1) a=0;
+    cum+=a;
+    const prev=calls[calls.length-1];
+    if(a>0 && cap-(cum-(fez?FIN:0))<arr*1.5){ const r=cap-(cum-(fez?FIN:0)); a+=r; cum+=r; }
+    if(!(a===0 && prev && prev.final && prev.d0===d0)) calls.push({n:++nn,d0,x:tx((d0+step/2)/7,p),a,cum,gasto,saldo:cum-gasto});
+    if(cum>=T-0.5 && gasto>=T*0.999) break;
+  }
+  // cronograma anterior
+  const oldCalls=oldPcts().map((q,i)=>({d0:OLD_D[i],a:q*T}));
+  // saldo parado médio (dia a dia) para os dois modelos
+  const apAt=(list,d)=>list.reduce((s,c)=>s+(c.d0<=d?c.a:0),0);
+  let sN=0,sO=0,nO=0,minN=0,minO=0,maxN=0,maxO=0;
+  for(let d=0; d<=fim; d++){
+    const g=gastoProj(d), bN=apAt(calls,d)-g, bO=apAt(oldCalls,d)-g;
+    sN+=Math.max(bN,0); sO+=Math.max(bO,0); minN=Math.min(minN,bN); minO=Math.min(minO,bO); maxN=Math.max(maxN,bN); maxO=Math.max(maxO,bO);
+  }
+  return {calls,oldCalls,fim,gastoProj,idleN:sN/(fim+1),idleO:sO/(fim+1),minN,minO,maxN,maxO};
+}
+
+// ── Gráfico ─────────────────────────────────────────────────────────────
+function svgChart(el,{xMax,yMax,series,xLabel,yFmt,xTicks}){
+  const W=820,H=300,L=64,R=14,T=12,Bm=36, w=W-L-R, h=H-T-Bm;
+  const X=x=>L+x/xMax*w, Y=y=>T+h-(y/yMax)*h;
+  let s='';
+  for(let i=0;i<=4;i++){ const y=yMax*i/4; s+=`<line x1="${L}" x2="${W-R}" y1="${Y(y)}" y2="${Y(y)}" stroke="var(--borda)"/><text x="${L-8}" y="${Y(y)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${yFmt(y)}</text>`; }
+  xTicks.forEach(t=>{ s+=`<text x="${X(t)}" y="${H-14}" text-anchor="middle" font-size="11" fill="var(--muted)">${t}</text>`; });
+  s+=`<text x="${L+w/2}" y="${H-1}" text-anchor="middle" font-size="11" fill="var(--muted)">${xLabel}</text>`;
+  series.forEach(se=>{ const d=se.pts.map((pt,i)=>(i?'L':'M')+X(pt[0]).toFixed(1)+' '+Y(pt[1]).toFixed(1)).join(' ');
+    s+=`<path d="${d}" fill="none" stroke="${se.c}" stroke-width="${se.w||2}" ${se.dash?'stroke-dasharray="6 4"':''} opacity="${se.o||1}"/>`; });
+  el.innerHTML=s;
+}
+function stepPts(list,fim){ const pts=[[0,0]]; let c=0; list.forEach(x=>{ if(x.a<=0) return; pts.push([x.d0/7,c]); c+=x.a; pts.push([x.d0/7,c]); }); pts.push([fim/7,c]); return pts; }
+
+// ── Aba Cronograma ──────────────────────────────────────────────────────
+let SIM=null;
+function calc(){
+  let p=P(); const [sc,hint]=sugC(p.casas);
+  if(!$('p-C').dataset.manual){ $('p-C').value=sc; p=P(); }
+  $('p-C-hint').textContent=hint+($('p-C').dataset.manual?' · editado':'');
+  const mPronta=(p.Cw+p.Aw)/SEMMES, mFim=(p.Cw+p.Aw+p.Tw)/SEMMES;
+  $('p-T-hint').textContent=`Casa pronta no mês ${mPronta.toLocaleString('pt-BR',{maximumFractionDigits:2})} · 95% pago na semana ${Math.round(p.Cw+p.Aw+p.Tw)} (mês ${mFim.toLocaleString('pt-BR',{maximumFractionDigits:2})})`;
+  $('h-titulo').textContent=(p.nome?p.nome+' · ':'')+'Cronograma de aportes';
+  $('h-sub').textContent=(p.inv?'Investidor: '+p.inv+' · ':'')+'Obra MCMV · chamada de capital pela curva real de desembolso · Rev09';
+  renderFin(p);
+  const S=simular(p); SIM={p,S};
+  const ativos=S.calls.filter(c=>c.a>0), ult=ativos[ativos.length-1];
+  const reduc=S.idleO>0?1-S.idleN/S.idleO:0;
+  $('k-crono').innerHTML=`
+    <div class="kpi main"><div class="l">Desembolso total (sem lote)</div><div class="v">${brl(p.T)}</div><div class="s">obra ${brl(p.obra)} + taxa adm ${brl(p.adm)} · ${p.casas} × ${p.area.toLocaleString('pt-BR')} m²</div></div>
+    <div class="kpi"><div class="l">1º aporte (início)</div><div class="v">${brl(ativos[0]?.a||0)}</div><div class="s">${pct((ativos[0]?.a||0)/p.T,1)} do custo</div></div>
+    <div class="kpi"><div class="l">Aportes previstos</div><div class="v">${ativos.length}</div><div class="s">${({1:'semanais',2:'quinzenais',4:'mensais'})[p.per]} · último em ${ult?fmtD(addD(p.ini,ult.d0)):'—'}</div></div>
+    ${(()=>{const f=S.calls.find(c=>c.final); return f?`<div class="kpi"><div class="l">Aporte final (documentação)</div><div class="v">${brl(f.a)}</div><div class="s">${pct(f.a/p.T,1)} · previsto para ${fmtD(addD(p.ini,f.d0))}</div></div>`:'';})()}
+    <div class="kpi good"><div class="l">Saldo parado médio</div><div class="v">${brl(S.idleN)}</div><div class="s">cronograma anterior: ${brl(S.idleO)} (${reduc>=0?'−':'+'}${pct(Math.abs(reduc),0)})</div></div>
+    <div class="kpi"><div class="l">Pico de saldo em conta</div><div class="v">${brl(S.maxN)}</div><div class="s">anterior: ${brl(S.maxO)}</div></div>`;
+  let h='';
+  const iUlt=S.calls.reduce((m,c,i)=>c.a>0?i:m,0);
+  S.calls.slice(0,iUlt+1).forEach(c=>{
+    h+=`<tr class="${c.a>0?'':'zero'}" ${c.final?'style="background:var(--azul-lt)"':''}><td class="c">${c.n}</td><td class="num">${c.final?'previsto ':''}${fmtD(addD(p.ini,c.d0))}</td><td><span class="chip">S${Math.floor(c.d0/7)+1}</span></td>
+      <td>${c.final?'<b>Aporte final da documentação</b>, liberado quando a IS der entrada: ISS, averbação/instituição, despachante, CND e habite-se':fase(c.x)}</td><td class="r num" style="font-weight:600">${c.a>0?brl(c.a):'sem aporte'}</td><td class="r num">${brl(c.cum)}</td><td class="r num">${brl(c.gasto)}</td><td class="r num">${brl(c.saldo)}</td></tr>`;
+  });
+  const resto=S.calls.slice(iUlt+1);
+  if(resto.length){ const u=S.calls[iUlt], f=resto[resto.length-1], semFim=Math.floor(f.d0/7)+1;
+    const g95=S.gastoProj(Math.round((p.Cw+p.Aw+p.Tw)*7));
+    h+=`<tr class="zero"><td class="c">—</td><td class="num">após ${fmtD(addD(p.ini,u.d0))}</td><td><span class="chip">S${Math.floor(u.d0/7)+2}+</span></td>
+      <td>Gastos de fechamento até a entrega, pagos com o saldo do último aporte: ${brl(p.T-u.gasto)} previstos (= saldo em conta). Nenhum aporte novo.</td><td class="r num">sem aporte</td><td class="r num">${brl(u.cum)}</td><td class="r num">${brl(p.T)}</td><td class="r num">R$ 0</td></tr>`; }
+  $('tb-crono').innerHTML=h;
+  $('tf-crono').innerHTML=`<tr><td colspan="4">Total aportado</td><td class="r">${brl(ult?ult.cum:0)}</td><td colspan="3"></td></tr>`;
+  const xMax=Math.ceil(S.fim/7);
+  const gpts=[]; for(let w=0;w<=xMax;w+=0.5) gpts.push([w,S.gastoProj(w*7)]);
+  svgChart($('ch-crono'),{xMax,yMax:p.T*1.05,xLabel:'semana de obra',yFmt:v=>Math.round(v/1000)+' mil',
+    xTicks:Array.from({length:Math.floor(xMax/4)+1},(_,i)=>i*4),
+    series:[{pts:stepPts(S.oldCalls,S.fim),c:'var(--cinza)',dash:1},{pts:gpts,c:'var(--navy)',w:2.5},{pts:stepPts(S.calls,S.fim),c:'var(--azul)',w:2.5}]});
+  $('nota-crono').innerHTML=`<b>Regra:</b> a cada ${PERN(p)}, aporte = gasto previsto para as próximas ${p.per+p.B} semanas + colchão de ${pct(p.col,1)} do custo (${brl(p.col*p.T)}) − saldo que ainda está na conta. O 1º aporte segue a mesma regra: mobilização das primeiras ${p.per+p.B} semanas + colchão.
+   A taxa de administração (${brl(p.adm)}) entra no desembolso e é chamada junto com a obra, na mesma proporção do gasto. Prazos: fim do cinza em ${(p.Cw/SEMMES).toLocaleString('pt-BR')} meses (~61% do desembolso), casa pronta em ${((p.Cw+p.Aw)/SEMMES).toLocaleString('pt-BR')} meses (~87%) e 95% pago na semana ${Math.round(p.Cw+p.Aw+p.Tw)}. Depois vem a cauda: elétrica final, louças, ISS, averbação, vistoria Caixa, CND e seguro RCPM.
+   ${p.fech==='sep'?`<b>Fechamento:</b> o aporte final (${brl(S.calls.find(c=>c.final)?.a||0)}) cobre só a documentação: ISS, averbação/instituição, despachante, CND e habite-se. A IS pede esse aporte quando der entrada na documentação; a data na tabela (casa pronta, semana ${Math.round(p.Cw+p.Aw)}) é só a previsão. O resto do fechamento segue nos aportes semanais: elétrica final, louças, limpeza, retoque, vistoria Caixa e RCPM. Pague a documentação só depois de receber o aporte final. `:`<b>Fechamento:</b> o último aporte semanal já completa o custo total. O saldo que fica em conta paga o fechamento até a entrega. `}<b>Esta tabela é a previsão.</b> O valor de cada chamada sai da aba <b>Chamada da semana</b>, com o total pago e o saldo real. Se a obra atrasar, o aporte cai sozinho; se adiantar, sobe.`;
+  calcQ(); calcROI(); calcBase();
+}
+
+// ── Aba Chamada da semana ─────────────────────────────────────────────
+function calcQ(){
+  if(!SIM) return; const p=SIM.p;
+  if(!$('q-data').value) $('q-data').value=isoD(new Date());
+  const gasto=val('q-gasto'), saldo=val('q-saldo'), aport=val('q-aport');
+  const dias=Math.round((dt($('q-data').value)-dt(p.ini))/864e5);
+  if(dias<0){ $('q-status').innerHTML=`<div class="status warn">A data da chamada é anterior ao início da obra (${fmtD(dt(p.ini))}).<small>Confira a data de início na aba Cronograma.</small></div>`; $('k-quinz').innerHTML=''; $('q-msg').textContent=''; return; }
+  if(!(gasto>=0) || !(saldo>=0) || isNaN(gasto) || isNaN(saldo)){
+    $('q-status').innerHTML=`<div class="status warn">Preencha o total já pago e o saldo em conta para calcular o aporte.<small>Total pago: relatório de pagamentos da obra no Mais Controle (sem lote). Saldo: extrato da conta que paga a obra.</small></div>`;
+    $('k-quinz').innerHTML=''; $('q-msg').textContent=''; return;
+  }
+  const prog=Math.min(gasto/p.T,1), xp=inv(Math.min(prog,.999)), tp=xt(xp,p), xT=tx(dias/7,p);
+  const h=p.per+p.B, need=p.T*(Fh(tx(tp+h,p))-Fh(xp)), alvo=need+p.col*p.T;
+  let aporte=Math.max(0,alvo-saldo); if(aporte>0) aporte=ceilTo(aporte,p.arr);
+  const fechSep=p.fech==='sep', FINq=fechSep?Math.min(finTotal(p),p.T*0.2):0;
+  if(fechSep && aport>0 && aport<p.T-FINq+1) aporte=Math.min(aporte,Math.max(0,p.T-FINq-aport));
+  if(aport>0) aporte=Math.min(aporte,Math.max(0,p.T-aport));
+  let cob=0; for(let w=0;w<=80;w+=0.25){ if(p.T*(Fh(tx(tp+w,p))-Fh(xp))>saldo){ break; } cob=w; }
+  const desvio=tp-dias/7, prox=addD($('q-data').value,p.per*7);
+  let st='';
+  if(aporte>0) st=`<div class="status ok">Chamar aporte de ${brl(aporte)} até ${fmtD(addD($('q-data').value,2))}.<small>Gasto previsto para as próximas ${h} semanas: ${brl(need)} + colchão ${brl(p.col*p.T)} − saldo ${brl(saldo)}.</small></div>`;
+  else st=`<div class="status warn">Não chamar aporte nesta ${PERN(p)}: o saldo cobre cerca de ${cob.toLocaleString('pt-BR')} semanas de obra.<small>Excedente sobre a necessidade + colchão: ${brl(saldo-alvo)}. Se o excedente se repetir, avalie se a obra está parada.</small></div>`;
+  if(aport>0){ const dif=aport-gasto-saldo; if(Math.abs(dif)>Math.max(500,0.01*p.T))
+    st+=`<div class="status bad">Conferir conciliação: aportado − pago − saldo = ${brl(dif)}.<small>Pode ser pagamento não lançado no Mais Controle, aporte não registrado ou rendimento/tarifa da conta. Não trava a chamada: é só para a Emily dar um double check.</small></div>`; }
+  if(fechSep) st+=`<div class="status warn" style="font-weight:400">Aporte final da documentação: ${brl(FINq)}, separado dos semanais.<small>Peça junto com a entrada da documentação (ISS, averbação, despachante, CND, habite-se) e pague esses itens só depois de receber.</small></div>`;
+  $('q-status').innerHTML=st;
+  $('k-quinz').innerHTML=`
+    <div class="kpi main"><div class="l">Aporte desta chamada</div><div class="v">${brl(aporte)}</div><div class="s">próxima chamada em ${fmtD(prox)}</div></div>
+    <div class="kpi"><div class="l">Avanço financeiro</div><div class="v">${pct(prog,1)}</div><div class="s">esperado pelo tempo: ${pct(Fh(xT),1)}</div></div>
+    <div class="kpi"><div class="l">Ritmo da obra</div><div class="v">${Math.abs(desvio)<1?'Na curva':(Math.abs(desvio).toLocaleString('pt-BR',{maximumFractionDigits:1})+' sem '+(desvio<0?'atrás':'à frente'))}</div><div class="s">semana ${Math.floor(dias/7)+1} de ~${Math.round(p.Cw+p.Aw+p.Tw)}</div></div>
+    <div class="kpi"><div class="l">Fase atual</div><div class="v" style="font-size:17px;line-height:1.2">${fase(xp)}</div></div>
+    <div class="kpi"><div class="l">Falta pagar na obra</div><div class="v">${brl(Math.max(0,p.T-gasto))}</div><div class="s">custo previsto ${brl(p.T)}</div></div>`;
+  const nm=p.inv?', '+p.inv.split(' ')[0]:'';
+  const obra=p.nome?'da obra '+p.nome:'da obra';
+  let m=`Oi${nm}! Segue a posição ${obra} em ${fmtD(dt($('q-data').value))}.\n\n`+
+        `Já pagamos ${brl(gasto)} na obra até agora (${pct(prog,0)} do previsto) e o saldo em conta está em ${brl(saldo)}.\n`+
+        `A obra está na fase de ${fase(xp).charAt(0).toLowerCase()+fase(xp).slice(1)}.\n\n`;
+  m+= aporte>0 ? `Para as próximas ${h} semanas a previsão de gastos é de ${brl(need)}. Com a reserva de segurança, o aporte desta ${PERN(p)} fica em ${brl(aporte)}, até ${fmtD(addD($('q-data').value,2))}.\n\n`
+              : `O saldo atual já cobre as próximas ${cob.toLocaleString('pt-BR')} semanas, então nesta ${PERN(p)} não precisa aportar.\n\n`;
+  m+=`Na próxima atualização, dia ${fmtD(prox)}, te mando de novo. Qualquer dúvida, me chama!`;
+  $('q-msg').textContent=m;
+}
+
+// ── Aba Retorno ─────────────────────────────────────────────────────────
+function xirr(fl){ const f=r=>fl.reduce((s,c)=>s+c.v/Math.pow(1+r,c.d/365),0);
+  let lo=-0.95,hi=20,flo=f(lo),fhi=f(hi); if(flo*fhi>0) return NaN;
+  for(let i=0;i<200;i++){ const m=(lo+hi)/2,fm=f(m); if(flo*fm<=0){hi=m;fhi=fm;}else{lo=m;flo=fm;} } return (lo+hi)/2; }
+function calcROI(){
+  if(!SIM) return; const {p,S}=SIM;
+  const vgv=(val('r-vgv')||0)*p.casas, com=(val('r-com')||0)/100, venda=val('r-venda')||10, lote=val('r-lote')||0, lotem=val('r-lotem')||0, pre=val('r-pre')||0, tma=(val('r-tma')||0)/100;
+  const recLiq=vgv*(1-com), inv=lote+pre+p.T, lucro=recLiq-inv, dV=Math.round(venda*30.44);
+  const base=[]; if(lote>0) base.push({d:-Math.round(lotem*30.44),v:-lote}); if(pre>0) base.push({d:-15,v:-pre}); base.push({d:dV,v:recLiq});
+  const fN=base.concat(S.calls.filter(c=>c.a>0).map(c=>({d:c.d0,v:-c.a}))), fO=base.concat(S.oldCalls.map(c=>({d:c.d0,v:-c.a})));
+  const tN=xirr(fN), tO=xirr(fO);
+  const dias=S.fim+1, custoO=(S.idleO-S.idleN)*(Math.pow(1+tma,dias/365)-1);
+  $('k-roi').innerHTML=`
+    <div class="kpi main"><div class="l">Lucro</div><div class="v">${brl(lucro)}</div><div class="s">margem s/ VGV ${pct(lucro/vgv)}</div></div>
+    <div class="kpi"><div class="l">ROI s/ capital total</div><div class="v">${pct(lucro/inv)}</div></div>
+    <div class="kpi good"><div class="l">TIR anual – chamada de capital</div><div class="v">${pct(tN)}</div><div class="s">${isFinite(tN)&&tN>tma?'acima':'abaixo'} da TMA de ${pct(tma,1)}</div></div>
+    <div class="kpi"><div class="l">TIR anual – cronograma anterior</div><div class="v">${pct(tO)}</div><div class="s">ganho: ${isFinite(tN-tO)?'+'+((tN-tO)*100).toLocaleString('pt-BR',{maximumFractionDigits:1})+' p.p.':'—'}</div></div>
+    <div class="kpi"><div class="l">Custo do saldo parado evitado</div><div class="v">${brl(custoO)}</div><div class="s">a ${pct(tma,1)} a.a. em ${Math.round(dias/7)} semanas</div></div>`;
+  const row=(l,v,b)=>`<div class="row${b?' b':''}"><span>${l}</span><span class="num">${v}</span></div>`;
+  $('roi-dre').innerHTML=row('VGV ('+p.casas+' casas)',brl(vgv))+row('Comissão de venda',brl(-vgv*com))+row('Receita líquida',brl(recLiq),1)+
+    row('Lote + ITBI + escritura',brl(-lote))+row('Outros pré-obra',brl(-pre))+row('Custo da obra',brl(-p.obra))+row('Taxa de administração IS',brl(-p.adm))+row('Capital total',brl(-inv),1)+row('Lucro',brl(lucro),1);
+  const mm={}; fN.forEach(c=>{ const m=Math.floor(c.d/30.44); mm[m]=(mm[m]||0)+c.v; });
+  let acc=0; $('roi-fluxo').innerHTML=Object.keys(mm).map(Number).sort((a,b)=>a-b).map(m=>{acc+=mm[m]; return row((m<0?'M'+m:'M+'+m)+' · '+fmtD(addD(p.ini,Math.round(m*30.44))).slice(3),brl(mm[m])+' <span style="color:var(--muted);font-size:11px">('+brl(acc)+')</span>');}).join('');
+  $('nota-roi').innerHTML=`<b>TIR</b> calculada pelas datas reais de cada fluxo (XIRR): lote, aportes e recebimento da venda. Antes ela era derivada do ROI, como se todo o capital entrasse no dia zero.
+   O custo da obra e a ordem de grandeza do retorno são os mesmos nos dois cenários. A diferença na TIR vem só de o dinheiro entrar quando a obra precisa.
+   O custo do saldo parado considera a TMA. Se a conta do investidor render CDI, o custo real é a diferença entre a TMA e o rendimento da conta.`;
+}
+
+// ── Aba Base real ───────────────────────────────────────────────────────
+function calcBase(){
+  const p=SIM.p;
+  const cores={'ABADIA 2':'#8fb8d8','GOMES 4':'#e0b36a','IS 5':'#7fb39a','LANA 6':'#d9a0c0','OSCAR 3':'#a99bc9','IAGO 4':'#b9a36d','LANA 7':'#c98d8d'};
+  const series=NOMES.map(o=>({pts:XS.map((x,i)=>[x*100,CURVES[o][i]*100]),c:cores[o],w:1.5,o:.9}));
+  series.push({pts:XS.map((x,i)=>[x*100,F[i]*100]),c:'var(--navy)',w:3});
+  series.push({pts:XS.map((x,i)=>[x*100,FMAX[i]*100]),c:'var(--azul)',w:1.5,dash:1});
+  svgChart($('ch-base'),{xMax:150,yMax:100,xLabel:'% do prazo até 95% do desembolso',yFmt:v=>Math.round(v)+'%',xTicks:[0,25,50,75,100,125,150],series});
+  $('lg-base').innerHTML=NOMES.map(o=>`<span><i style="background:${cores[o]}"></i>${o}</span>`).join('')+'<span><i style="background:var(--navy)"></i>Média (curva usada)</span><span><i style="background:var(--azul)"></i>Envoltória (obra mais rápida)</span>';
+  let h='',sT=0,sA=0,sIo=0,sIn=0;
+  BT.forEach(b=>{ const m=META[b.obra]; sT+=b.T; sA+=m[1]; sIo+=b.idleA; sIn+=b.idleN;
+    h+=`<tr><td>${b.obra}</td><td class="c">${m[0]}</td><td class="r num">${m[1].toLocaleString('pt-BR')} m²</td><td class="r num">${brl(b.T)}</td><td class="r num">${brl(b.T/m[1])}</td><td class="r num">S${m[4]}</td><td class="r num">S${m[5]}</td><td class="r num">S${Math.round(m[3])}</td><td class="r num">${brl(b.idleA)}</td><td class="r num" style="color:var(--ok);font-weight:600">${brl(b.idleN)}</td><td class="r num">${b.faltaA>0?brl(b.faltaA)+' · '+b.dnegA+' dias':'—'}</td></tr>`; });
+  $('tb-base').innerHTML=h;
+  $('tf-base').innerHTML=`<tr><td>Total / média</td><td></td><td class="r">${sA.toLocaleString('pt-BR',{maximumFractionDigits:2})} m²</td><td class="r">${brl(sT)}</td><td class="r">${brl(sT/sA)}</td><td colspan="3"></td><td class="r">${brl(sIo/BT.length)}</td><td class="r">${brl(sIn/BT.length)}</td><td class="r">semanal: R$ ${Math.max(...BT.map(b=>b.faltaN)).toLocaleString('pt-BR')} em ${BT.reduce((a,b)=>a+b.dnegN,0)} dia</td></tr>`;
+  const ets=Object.entries(ET.share).sort((a,b)=>b[1]-a[1]), mx=ets[0][1];
+  $('tb-et').innerHTML=ets.map(([e,s])=>{ const vs=NOMES.map(o=>ET.obra[o][e]||0); const t=ET.tim[e];
+    return `<tr><td>${e}</td><td class="r num">${pct(s)}</td><td><div class="bar"><div style="width:${s/mx*100}%"></div></div></td><td class="r num">${pct(Math.min(...vs),1)} – ${pct(Math.max(...vs),1)}</td><td class="r num">S${Math.max(1,Math.round(xt(t[1],p)))}</td><td class="r num">${brl(s*p.obra)}</td></tr>`; }).join('')+`<tr><td><b>Taxa de administração IS</b> (por casa, fora da curva por etapa)</td><td class="r num">${pct(p.adm/p.T)}</td><td></td><td class="r num">R$ ${(p.adm/p.casas).toLocaleString('pt-BR')}/casa</td><td class="r num">junto com a obra</td><td class="r num">${brl(p.adm)}</td></tr>`;
+  calcReal();
+}
+
+
+const NOTAREAL={'OSCAR 3':'Só a conta Oscar – Caixa. Custo final com R$ 11.376 a concluir e saldo da taxa adm.','GOMES 4':'Só a conta Gomes – Caixa. O Mais Controle mostra a conta negativa em 83 dias (até R$ 21,4 mil): aportes lançados depois dos pagamentos ou saldo inicial não lançado. A Emily precisa conferir.'};
+function calcReal(){
+  $('real-box').innerHTML=REAL.map((r,i)=>`<div class="two"><div><svg class="chart" id="ch-real-${i}" viewBox="0 0 820 300"></svg>
+    <div class="legend"><span><i style="background:var(--navy)"></i>Pago na obra (com taxa adm)</span><span><i style="background:var(--bad)"></i>Aportes reais</span><span><i style="background:var(--azul)"></i>Chamada semanal</span></div></div>
+    <div><h2 style="font-size:16px">${r.obra} <span>${META[r.obra][0]} casas · desde ${fmtD(dt(r.ini))}</span></h2>
+    <div class="row"><span></span><span><b>Real</b> · <b style="color:var(--azul)">Chamada</b></span></div>
+    <div class="row"><span>Saldo parado médio</span><span class="num">${brl(r.idleR)} · <span style="color:var(--azul)">${brl(r.idleM)}</span></span></div>
+    <div class="row"><span>Pico de saldo em conta</span><span class="num">${brl(r.picoR)} · <span style="color:var(--azul)">${brl(r.picoM)}</span></span></div>
+    <div class="row"><span>Dias com conta negativa</span><span class="num">${r.dnegR}${r.faltaR?' (até '+brl(r.faltaR)+')':''} · <span style="color:var(--azul)">${r.dnegM}</span></span></div>
+    <div class="row b"><span>Saldo em conta hoje</span><span class="num">${brl(r.saldoHoje)} · <span style="color:var(--azul)">${brl(r.saldoM)}</span></span></div>
+    <div class="row"><span>Aportado × custo final estimado</span><span class="num">${brl(r.aportado)} × ${brl(r.Tfin)}</span></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px">${NOTAREAL[r.obra]||""}</p></div></div>`).join('');
+  REAL.forEach((r,i)=>{ const xMax=Math.ceil(r.serie[r.serie.length-1][0]/7); const yMax=Math.max(...r.serie.map(s=>Math.max(s[1],s[2],s[3])))*1.05;
+    svgChart($('ch-real-'+i),{xMax,yMax,xLabel:'semana',yFmt:v=>Math.round(v/1000)+' mil',xTicks:Array.from({length:Math.floor(xMax/4)+1},(_,j)=>j*4),
+      series:[{pts:r.serie.map(s=>[s[0]/7,s[3]]),c:'var(--navy)',w:2.5},{pts:r.serie.map(s=>[s[0]/7,s[1]]),c:'var(--bad)',w:2},{pts:r.serie.map(s=>[s[0]/7,s[2]]),c:'var(--azul)',w:2}]}); });
+}
+// ── Eventos ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));
+  document.querySelectorAll('.panel').forEach(pn=>pn.classList.toggle('active',pn.id==='p-'+t.dataset.t));
+}));
+function printTab(t){ document.querySelectorAll('.panel').forEach(pn=>pn.classList.toggle('printme',pn.id==='p-'+t)); window.print(); }
+['ob-nome','ob-inv','ob-ini','ob-casas','ob-area','ob-rm2','ob-tot','ob-adm','p-fech','p-per','p-B','p-col','p-arr','p-A','p-T'].forEach(id=>$(id).addEventListener('input',calc));
+$('ob-casas').addEventListener('input',()=>{ delete $('p-C').dataset.manual; calc(); });
+$('p-C').addEventListener('input',()=>{ $('p-C').dataset.manual='1'; calc(); });
+['q-data','q-gasto','q-saldo','q-aport'].forEach(id=>$(id).addEventListener('input',calcQ));
+['r-vgv','r-com','r-venda','r-lote','r-lotem','r-pre','r-tma'].forEach(id=>$(id).addEventListener('input',calcROI));
+$('q-copy').addEventListener('click',()=>{ navigator.clipboard?.writeText($('q-msg').textContent).then(()=>{ $('q-copy').textContent='Mensagem copiada'; setTimeout(()=>$('q-copy').textContent='Copiar mensagem',1800); }); });
+calc();
+</script>
+</body>
+</html>
